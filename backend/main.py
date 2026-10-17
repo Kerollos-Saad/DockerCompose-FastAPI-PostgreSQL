@@ -18,7 +18,7 @@ class Todo(Base):
     
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, nullable=False)
-    Completed = Column(String, nullable=False, default=False)
+    completed = Column(String, nullable=False, default=False)
     
 Base.metadata.create_all(bind=engine)
 
@@ -51,7 +51,7 @@ def create_todo(body: TodoCreate):
         session.refresh(todo)
         return todo
     
-@app.patch("/todos/{todo_id}", response={404, {"description": "Todo not found"}})
+@app.patch("/todos/{todo_id}", responses={404: {"description": "Todo not found"}})
 def update_todo(todo_id: int, body: TodoUpdate):
     with Session(engine) as session:
         todo = session.get(Todo, todo_id)
@@ -62,7 +62,7 @@ def update_todo(todo_id: int, body: TodoUpdate):
         session.refresh(todo)
         return todo
     
-@app.delete("/todos/{todo_id}", status_code=204, response={404: {"description": "Todo not found"}})
+@app.delete("/todos/{todo_id}", status_code=204, responses={404: {"description": "Todo not found"}})
 def delete_todo(todo_id: int):
     with Session(engine) as session:
         todo = session.get(Todo, todo_id)
