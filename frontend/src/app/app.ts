@@ -1,11 +1,11 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
+import { TodoListComponent } from './todo-list.component';
 
 @Component({
   selector: 'app-root',
-  imports: [],
+  imports: [TodoListComponent],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
 export class App {
-  protected readonly title = signal('todo-app');
 }

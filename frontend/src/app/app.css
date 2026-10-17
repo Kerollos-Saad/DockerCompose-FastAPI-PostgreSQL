@@ -1,0 +1,7 @@
+:host {
+  display: block;
+  margin: 2rem auto;
+  max-width: 40rem;
+  padding: 0 1rem;
+  font-family: Arial, sans-serif;
+}
