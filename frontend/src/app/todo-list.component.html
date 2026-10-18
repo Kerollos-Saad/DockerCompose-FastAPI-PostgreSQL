@@ -1,13 +1,46 @@
+<form (submit)="addTodo($event)">
+  <label for="new-todo-title">New todo</label>
+  <input
+    id="new-todo-title"
+    type="text"
+    [value]="newTodoTitle()"
+    (input)="onTitleInput($event)"
+    (keydown.enter)="addTodo($event)"
+  />
+  <button type="submit" [disabled]="!newTodoTitle().trim() || adding()">Add</button>
+</form>
+@if (errorMessage(); as message) {
+  <div class="error-banner" role="alert">
+    <span>{{ message }}</span>
+    <button type="button" aria-label="Dismiss error" (click)="dismissError()">Dismiss</button>
+  </div>
+}
+
 @if (loading()) {
   <p>Loading...</p>
-} @else if (error()) {
-  <p role="alert">Unable to load todos.</p>
-} @else if (todos().length === 0) {
+} @else if (!loadError() && todos().length === 0) {
   <p>No todos yet</p>
-} @else {
+} @else if (!loadError()) {
   <ul>
     @for (todo of todos(); track todo.id) {
-      <li [class.completed]="todo.completed">{{ todo.title }}</li>
+      <li [class.completed]="todo.completed">
+        <label>
+          <input
+            type="checkbox"
+            [checked]="todo.completed"
+            [disabled]="pendingTodoIds().has(todo.id)"
+            (change)="onCompletedChange(todo, $event)"
+          />
+          {{ todo.title }}
+        </label>
+        <button
+          type="button"
+          [disabled]="pendingTodoIds().has(todo.id)"
+          (click)="removeTodo(todo)"
+        >
+          Delete
+        </button>
+      </li>
     }
   </ul>
 }
