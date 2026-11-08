@@ -1,59 +1,25 @@
-# TodoApp
+# Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.3.
+The frontend is a standalone Angular application. In Docker Compose it is built into static files and served by Nginx on <http://localhost:8081>. It sends API requests to the FastAPI backend at <http://localhost:8000>.
 
-## Development server
+## Run with Docker Compose
 
-To start a local development server, run:
+From the project root:
 
-```bash
-ng serve
+```powershell
+docker compose up --build frontend
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+The backend and PostgreSQL are also part of the application. To start all services together, use `docker compose up --build` from the root; see the [project README](../README.md).
 
-## Code scaffolding
+## Run Angular development server
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Install Node.js and npm, then run:
 
-```bash
-ng generate component component-name
+```powershell
+Set-Location D:\Docker\DockerCompose\frontend
+npm ci
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Open <http://localhost:4200>. The API at <http://localhost:8000> must be running separately for Todo requests to work.
